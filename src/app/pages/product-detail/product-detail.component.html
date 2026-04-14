@@ -1,0 +1,40 @@
+<div class="container section" *ngIf="product; else notFound">
+  <a routerLink="/shop" class="btn btn-link mb-3 ps-0" style="color: var(--text-light);">
+    ← Volver al catálogo
+  </a>
+
+  <div class="row g-5">
+    <!-- Imagen -->
+    <div class="col-12 col-md-6">
+      <img [src]="product.image" [alt]="product.name" class="product-detail-img">
+    </div>
+
+    <!-- Info -->
+    <div class="col-12 col-md-6">
+      <small class="text-muted">{{ product.category }}</small>
+      <h1 class="mt-1 mb-3">{{ product.name }}</h1>
+      <p class="mb-4" style="color: var(--text-light);">{{ product.description }}</p>
+      <p class="mb-4" style="font-size: 28px; font-weight: 700; color: var(--primary);">
+        ${{ product.price | number }}
+      </p>
+      <button class="btn btn-primary w-100" (click)="addToCart()">
+        🛒 Agregar al carrito
+      </button>
+      <a routerLink="/cart" class="btn btn-outline-secondary w-100 mt-2">
+        Ver carrito
+      </a>
+    </div>
+  </div>
+</div>
+
+<ng-template #notFound>
+  <div class="container section text-center">
+    <h2>Producto no encontrado</h2>
+    <a routerLink="/shop" class="btn btn-primary mt-3">Volver al catálogo</a>
+  </div>
+</ng-template>
+
+<!-- Toast -->
+<div class="toast-success" *ngIf="showToast">
+  ✓ Producto agregado al carrito
+</div>

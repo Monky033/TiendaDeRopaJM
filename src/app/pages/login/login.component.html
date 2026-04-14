@@ -1,0 +1,65 @@
+<div class="container">
+  <div class="login-container">
+    <div class="text-center mb-4">
+      <span style="font-size: 40px;">🛍️</span>
+      <h2 class="mt-2">StyleShop</h2>
+      <p class="text-muted">Ingresá a tu cuenta</p>
+    </div>
+
+    <form (ngSubmit)="onSubmit()" #loginForm="ngForm" *ngIf="!otpSent">
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input
+          type="email"
+          id="email"
+          class="form-control"
+          [(ngModel)]="email"
+          name="email"
+          required
+          placeholder="ejemplo@mail.com"
+        >
+      </div>
+      <button type="submit" class="btn btn-primary w-100 mt-2" [disabled]="!loginForm.valid">
+        Enviar código OTP
+      </button>
+    </form>
+
+    <form (ngSubmit)="onVerify()" #otpForm="ngForm" *ngIf="otpSent && !loggedIn">
+      <p class="text-muted text-center mb-3">
+        Ingresá el código enviado a <strong>{{ email }}</strong>
+      </p>
+      <div class="form-group">
+        <label for="otp">Código OTP</label>
+        <input
+          type="text"
+          id="otp"
+          class="form-control text-center"
+          [(ngModel)]="otp"
+          name="otp"
+          required
+          maxlength="6"
+          placeholder="123456"
+          style="letter-spacing: 8px; font-size: 22px; font-weight: 700;"
+        >
+        <small class="text-muted">Código de prueba: <strong>123456</strong></small>
+      </div>
+      <button type="submit" class="btn btn-primary w-100 mt-2" [disabled]="!otpForm.valid">
+        Ingresar
+      </button>
+      <button type="button" class="btn btn-link w-100 mt-1" (click)="otpSent = false">
+        Cambiar email
+      </button>
+    </form>
+
+    <div *ngIf="loggedIn" class="text-center py-3">
+      <div style="font-size: 48px;">✅</div>
+      <h3 class="mt-2" style="color: var(--success);">¡Sesión iniciada!</h3>
+      <p class="text-muted">Bienvenido/a a StyleShop.</p>
+      <a routerLink="/" class="btn btn-primary mt-2">Ir al inicio</a>
+    </div>
+
+    <div class="alert alert-danger mt-3" *ngIf="error">
+      {{ error }}
+    </div>
+  </div>
+</div>
